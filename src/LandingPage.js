@@ -23,7 +23,7 @@ const LandingPage = () => {
             <p className="Logo-min-text">Remember Everthing</p>
             <ButtonGroup className="Login-Buttons">
             <Link to="/signup"><Button className="btn btn-success">Sign Up</Button></Link>
-            <Link to="/signup"><Button className="btn btn-secondary">Log In</Button></Link>
+            <Link to="/questions"><Button className="btn btn-secondary">Log In</Button></Link>
             </ButtonGroup>
             </Col>        
         </Row> 
