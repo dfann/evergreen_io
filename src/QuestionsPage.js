@@ -9,8 +9,12 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import {Link} from 'react-router-dom';
+import questions from './evergreen_data/questions'
+import {users} from './evergreen_data/users'
+import {attempts} from './evergreen_data/attempts'
 
 const QuestionsPage = () => {
+console.log(questions)
   return (
     <Table striped bordered hover>
         <thead>
