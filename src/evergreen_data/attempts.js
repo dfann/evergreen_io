@@ -7,7 +7,7 @@ const attempts = [{
     }
   },
   "questionId":  "5ed300917164530535b435da",
-  "comfortLevel": 0
+  "comfortLevel": 3
 },{
   "_id":  "5ed304487164530535b435e2",
   "createdAt": {
@@ -17,7 +17,7 @@ const attempts = [{
     }
   },
   "questionId":  "5ed300917164530535b435da",
-  "comfortLevel": 2
+  "comfortLevel": 3
 },{
   "_id":  "5ed304d57164530535b435e3",
   "createdAt": {
@@ -27,7 +27,7 @@ const attempts = [{
     }
   },
   "questionId":  "5ed300917164530535b435da",
-  "comfortLevel": 1
+  "comfortLevel": 3
 },{
   "_id":  "5ed3054cbbb3b51ea15e4c9b",
   "createdAt": {

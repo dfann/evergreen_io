@@ -2,6 +2,18 @@ body {
   background-color: #EFEEEA;
 }
 
+.Comfort-level-red {
+  background-color: #FBCFBD;
+}
+
+.Comfort-level-yellow {
+  background-color: #FBEECA;
+}
+
+.Comfort-level-green {
+  background-color: #D8EACC;
+}
+
 .App {
   text-align: center;
   font-family: 'IBM Plex Serif', serif;
