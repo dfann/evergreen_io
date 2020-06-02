@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const routes = require('./backend/routes/index');
 // const helpers = require('./helpers');
 // const errorHandlers = require('./handlers/errorHandlers');
-// require('./handlers/passport');
+require('./backend/handlers/passport');
 
 // create our Express app
 const app = express();
