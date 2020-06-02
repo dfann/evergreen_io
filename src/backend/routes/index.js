@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 // const storeController = require('../controllers/storeController');
-// const userController = require('../controllers/userController');
-// const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 // const reviewController = require('../controllers/reviewController');
 // const { catchErrors } = require('../handlers/errorHandlers');
+const { body } = require('express-validator');
 
 router.get('/', (req, res) => ( res.json({"message": "hi"})));
 // router.get('/stores', catchErrors(storeController.getStores));
@@ -37,6 +38,17 @@ router.get('/', (req, res) => ( res.json({"message": "hi"})));
 // 2. register the user
 // 3. we need to log them in
 router.post('/register',
+[
+  body('username', 'You must supply a name.').not().isEmpty(),
+  body('email', 'That Email is not valid' ).isEmail().normalizeEmail({
+    gmail_remove_dots: false,
+    remove_extension: false,
+    gmail_remove_subaddress: false
+  }),
+  body('password', 'Password cannot be blank.').not().isEmpty(),
+  body('confirmPassword', 'Confirmed Passworc cannot be blank.').not().isEmpty(),
+  body('confirmPassword', 'Your passwords do not match').custom( (confirmPassword, {req}) => confirmPassword === req.body.password)
+],
   userController.validateRegister,
   userController.register,
   authController.login

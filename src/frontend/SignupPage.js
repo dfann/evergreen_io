@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, isValidElement } from 'react';
 import Form from 'react-bootstrap/Form'; 
 import Button from 'react-bootstrap/Button'; 
 import Container from 'react-bootstrap/Container';
@@ -27,9 +27,19 @@ const Signup = () => {
                 setConfirmPassword(value);
                 break;
         }
-
-
     };
+
+    const handleSubmit = (event) => {
+        if(isValidInput()){
+            //Send To Back End
+            //Redirect
+        }
+        else{
+            //Show Toast
+        }
+        event.preventDefault();
+        return false;
+    }
 
     return(
     <div>
