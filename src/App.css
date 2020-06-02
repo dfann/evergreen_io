@@ -2,6 +2,11 @@ body {
   background-color: #EFEEEA;
 }
 
+textarea.Textbox-control {
+  width: 40em;
+  height: 20em;
+}
+
 .Comfort-level-red {
   background-color: #FBCFBD;
 }

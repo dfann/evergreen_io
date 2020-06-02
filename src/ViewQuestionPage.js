@@ -25,20 +25,36 @@ const Signup = () => {
                     <Col >           
                         <Form  className="Form">
                             <div className="page-header">
-                                <h1>Add A Question</h1>
+                                <h1>Login</h1>
                             </div>
 
                             <Form.Group controlId="formUsername">
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control type="input" placeholder="Username" />
-                            </Form.Group>    
+                            </Form.Group>
 
-                            
+
+                            <Form.Group controlId="formUsername">
+                                <Form.Label>Average Comfort Level</Form.Label>
+                                <Form.Control type="input" placeholder="Username" />
+                            </Form.Group>
+   
+
+                            <Form.Group controlId="formUsername">
+                                <Form.Label>Average Time</Form.Label>
+                                <Form.Control type="input" placeholder="Username" />
+                            </Form.Group>
+
+                            <Form.Group controlId="formUsername">
+                                <Form.Label>Current Time</Form.Label>
+                                <Form.Control type="input" placeholder="Username" />
+                            </Form.Group>
+
                             <Form.Check 
                                 type="switch"
                                 id="custom-switch"
                                 label="Render Text As MarkDown"
-                            />                      
+                            />                
 
                             <Form.Group  controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Description</Form.Label>
@@ -53,11 +69,38 @@ const Signup = () => {
                             <Form.Group  controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Notes</Form.Label>
                                 <Form.Control className="Textbox-control" as="textarea" rows="3" />
-                            </Form.Group>                        
+                            </Form.Group>                          
+                           
+                            <Form.Group  controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Comfort Level</Form.Label>
+                                <div>
+                                <Form.Check
+                                    custom
+                                    inline
+                                    label="1"
+                                    type="checkbox"
+                                    id="custom-inline-checkbox-1"
+                                />
+                                <Form.Check
+                                    custom
+                                    inline
+                                    label="2"
+                                    type="checkbox"
+                                    id="custom-inline-checkbox-2"
+                                />
+                                <Form.Check
+                                    custom
+                                    inline                                    
+                                    label="3"
+                                    type="checkbox"
+                                    id="custom-inline-checkbox-3"
+                                />
+                                </div>
+                            </Form.Group> 
                         
                             <Link to="/questions">
                                 <Button className="btn btn-success" variant="primary" type="submit">
-                                Submit
+                                Save Attempt
                                 </Button>
                             </Link>
                         </Form>
