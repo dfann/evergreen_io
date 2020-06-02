@@ -33,14 +33,14 @@ router.get('/', (req, res) => ( res.json({"message": "hi"})));
 // router.post('/login', authController.login);
 // router.get('/register', userController.registerForm);
 
-// // 1. Validate the registration data
-// // 2. register the user
-// // 3. we need to log them in
-// router.post('/register',
-//   userController.validateRegister,
-//   userController.register,
-//   authController.login
-// );
+// 1. Validate the registration data
+// 2. register the user
+// 3. we need to log them in
+router.post('/register',
+  userController.validateRegister,
+  userController.register,
+  authController.login
+);
 
 // router.get('/logout', authController.logout);
 
