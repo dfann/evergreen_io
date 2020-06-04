@@ -30,15 +30,7 @@ const Signup = () => {
     };
 
     const handleSubmit = (event) => {
-        if(isValidInput()){
-            //Send To Back End
-            //Redirect
-        }
-        else{
-            //Show Toast
-        }
-        event.preventDefault();
-        return false;
+       
     }
 
     return(
