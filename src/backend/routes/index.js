@@ -45,7 +45,7 @@ router.post('/register',
     gmail_remove_subaddress: false
   }),
   body('password', 'Password cannot be blank.').not().isEmpty(),
-  body('confirmPassword', 'Confirmed Passworc cannot be blank.').not().isEmpty(),
+  body('confirmPassword', 'Confirmed Password cannot be blank.').not().isEmpty(),
   body('confirmPassword', 'Your passwords do not match').custom( (confirmPassword, {req}) => confirmPassword === req.body.password)
 ],
   userController.validateRegister,

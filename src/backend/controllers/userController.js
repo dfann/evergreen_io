@@ -7,10 +7,10 @@ const { validationResult } = require('express-validator');
 exports.validateRegister = (req, res, next) => {
 
   const errors = validationResult(req);
-  console.log(errors);  
-  if (!errors.isEmpty()) { 
+  console.log(errors);
+  if (!errors.isEmpty()) {
     res.status(400).json(errors);
-    return;    
+    return;
   }
   next(); // there were no errors!
 };
@@ -18,8 +18,14 @@ exports.validateRegister = (req, res, next) => {
 exports.register = async (req, res, next) => {
   const user = new User({ email: req.body.email, username: req.body.username });
   const register = promisify(User.register, User);
-  await register(user, req.body.password);
-  next(); // pass to authController.login
+  try {
+    await register(user, req.body.password);
+    next(); // pass to authController.login
+  }
+  catch (err){
+    console.log('\n\nerr:', err, ':err\n\n');
+    res.status(400).json({message: err.message});
+  }
 };
 
 // exports.account = (req, res) => {

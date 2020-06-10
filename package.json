@@ -9,8 +9,8 @@
     "eject": "react-scripts eject",
     "backend-scripts-below": "",
     "backend-start": "node ./src/start.js",
-    "watch": "nodemon ./start.js --ignore public/",
-    "dev": "concurrently 'npm run watch' 'npm run assets' --names '💻,📦' --prefix name",
+    "watch": "nodemon ./src/start.js --ignore public/",
+    "backend-dev": "concurrently 'npm run watch' 'npm run assets' --names '💻,📦' --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
     "blowitallaway": "node ./data/load-sample-data.js --delete"
