@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -14,7 +20,10 @@
     "backend-dev": "concurrently 'npm run watch' 'npm run assets' --names '💻,📦' --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
-    "blowitallaway": "node ./data/load-sample-data.js --delete"
+    "blowitallaway": "node ./data/load-sample-data.js --delete",
+    "precommit": "pretty-quick --staged",
+    "postcommit": "git update-index -g",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -69,9 +78,12 @@
     "concurrently": "^3.4.0",
     "css-loader": "^3.5.3",
     "extract-text-webpack-plugin": "^2.1.0",
+    "husky": "^4.2.5",
     "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.3.3",
+    "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1",
     "sass-loader": "^6.0.3"
   },
   "eslintConfig": {
