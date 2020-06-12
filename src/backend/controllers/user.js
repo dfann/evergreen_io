@@ -1,8 +1,6 @@
 import Joi from 'joi';
-import User from '../models/User.js'
+import User from '../models/User.js';
 import crypto from 'crypto';
-
-
 
 // exports.validateRegister = (req, res, next) => {
 
@@ -16,22 +14,22 @@ import crypto from 'crypto';
 // };
 
 const createNewUser = async (req, res) => {
-  try {
-      const { username, email, password } = req.body;
-      await Joi.validate({ username, email, password }, signUp);
-      const newUser = new User({ username, email, password });
-      await newUser.save();
-      /*middle ware*/
-      const sessionUser = sessionizeUser(newUser);
-      req.session.user = sessionUser;
-      res.send(sessionUser);
-      /*middle ware */
-  } catch (err) {
-      res.status(400).send(parseError(err));
-  }
+    try {
+        const { username, email, password } = req.body;
+        await Joi.validate({ username, email, password }, signUp);
+        const newUser = new User({ username, email, password });
+        await newUser.save();
+        /*middle ware*/
+        const sessionUser = sessionizeUser(newUser);
+        req.session.user = sessionUser;
+        res.send(sessionUser);
+        /*middle ware */
+    } catch (err) {
+        res.status(400).send(parseError(err));
+    }
 };
 
-export {createNewUser};
+export { createNewUser };
 // exports.register = async (req, res, next) => {
 //   const user = new User({ email: req.body.email, username: req.body.username });
 //   const register = promisify(User.register, User);
