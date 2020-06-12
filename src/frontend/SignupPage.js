@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EvergreenNavbar from './EvergreenNavbar';
 const Signup = () => {
-    const [emailAddress, setEmailAddress] = useState("");
+    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +15,7 @@ const Signup = () => {
         const {name, value} = target;
         switch(name){
             case "email":
-                setEmailAddress(value);
+                setEmail(value);
                 break;
             case "username":
                 setUsername(value);
@@ -29,8 +29,29 @@ const Signup = () => {
         }
     };
 
-    const handleSubmit = (event) => {
-       
+    const handleSubmit = async (event) => {
+       //Turn into a json packet 
+       const body = {
+           email,
+           username,
+           password,
+           confirmPassword
+       };
+       const response = await fetch("http://localhost:80/register", {
+        method: "POST",
+        mode: 'cors', // no-cors,
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const json = await response.json();
+      console.log(json);
+
+
+       //Send to back end
+       //Store session cookie 
     }
 
     return(
@@ -40,13 +61,16 @@ const Signup = () => {
         <Row>
             
             <Col xs={{offset: 2, span: 6}}>           
-                <Form  className="Form" onSubmit={(e) => {console.log(e.target.value); e.preventDefault();return false;}}>
+                <Form  className="Form" onSubmit={(e) => { 
+                    e.preventDefault();
+                    handleSubmit();
+                    return false;}}>
                     <div className="page-header">
                         <h1>Sign Up For An Account</h1>
                     </div>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control name="email" value={emailAddress} onChange={handleChange} type="email" placeholder="Enter email" />
+                        <Form.Control name="email" value={email} onChange={handleChange} type="email" placeholder="Enter email" />
                         <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                         </Form.Text>

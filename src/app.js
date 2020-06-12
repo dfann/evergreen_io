@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const promisify = require('es6-promisify');
+const cors = require('cors');
 const flash = require('connect-flash');
 const routes = require('./backend/routes/index');
 // const helpers = require('./helpers');
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());

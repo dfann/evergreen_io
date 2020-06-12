@@ -26,6 +26,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
     "dompurify": "^2.0.3",
     "dotenv": "^4.0.0",
     "es6-promisify": "^5.0.0",
@@ -83,5 +84,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000/"
 }
