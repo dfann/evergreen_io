@@ -1,4 +1,4 @@
-import { createNewUser, forgotPassword } from './user';
+import { createNewUser } from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import { mockResponse, mockRequest } from '../test_util/mock-req-res';

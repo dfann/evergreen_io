@@ -12,6 +12,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
+        "backend-build": "babel src -d lib",
         "test": "jest",
         "eject": "react-scripts eject",
         "backend-scripts-below": "",
@@ -72,8 +73,12 @@
         "validator": "^7.0.0"
     },
     "devDependencies": {
+        "@babel/cli": "^7.10.1",
+        "@babel/core": "^7.10.2",
+        "@babel/preset-env": "^7.10.2",
         "autoprefixer": "^6.7.7",
         "babel-core": "^6.24.0",
+        "babel-jest": "^26.0.1",
         "babel-preset-env": "^1.6.0",
         "concurrently": "^3.4.0",
         "css-loader": "^3.5.3",
