@@ -1,35 +1,47 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.Promise = global.Promise;
-const md5 = require('md5');
-const validator = require('validator');
-const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const passportLocalMongoose = require('passport-local-mongoose');
+import mongoose from'mongoose';
+import bcryptjs from 'bcryptjs';
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    trim: true,
-    validate: [validator.isEmail, 'Invalid Email Address'],
-    required: 'Please Supply an email address'
-  },
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: 'Please supply a username',
-    trim: true
+    validate: {
+      validator: username => User.doesNotExist({ username }),
+      message: "Username already exists"
+    }
+  },
+  email: {
+    type: String,
+    validate: {
+      validator: email => User.doesNotExist({ email }),
+      message: "Email already exists"
+    }
+  },
+  password: {
+    type: String,
+    required: true
   },
   resetPasswordToken: String,
-  resetPasswordExpires: Date 
+  resetPasswordExpires: Date,
+},
+  {
+    timestamps: true
+  }
+);
+
+/*
+Because of lexical scoping, we cannot use arrow functions for these three methods.
+*/
+UserSchema.pre('save', function () {
+  if (this.isModified('password')) {
+    this.password = bcryptjs.hashSync(this.password, 10);
+  }
 });
+UserSchema.statics.doesNotExist = async function (field) {
+   return await this.where(field).countDocuments() === 0;
+};
+UserSchema.methods.comparePasswords = function (password) {
+  return bcryptjs.compareSync(password, this.password);
+};
 
-userSchema.virtual('gravatar').get(function() {
-  const hash = md5(this.email);
-  return `https://gravatar.com/avatar/${hash}?s=200`;
-});
-
-userSchema.plugin(passportLocalMongoose, { usernameField: 'username' });
-userSchema.plugin(mongodbErrorHandler);
-
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
+export default User;
