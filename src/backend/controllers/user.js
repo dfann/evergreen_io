@@ -3,7 +3,7 @@ import User from '../models/User.js';
 import { parseError, sessionizeUser } from '../util/helpers.js';
 import { signUp, signIn } from '../joi_validations/user.js';
 import crypto from 'crypto';
-import mail from '../util/mail';
+import mail from '../util/mail.js';
 
 const createNewUser = async (req, res) => {
     try {

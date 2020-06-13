@@ -1,11 +1,12 @@
 import 'dotenv/config.js';
 import express from 'express';
 import mongoose from 'mongoose';
+mongoose.set('useUnifiedTopology', true);
 import session from 'express-session';
 import connectStore from 'connect-mongo';
 import cors from 'cors';
 
-import { userRoutes } from './backend/routes/index.js';
+import { userRoutes, sessionRoutes } from './backend/routes/index.js';
 // import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 
 (async () => {
@@ -44,7 +45,7 @@ import { userRoutes } from './backend/routes/index.js';
         const apiRouter = express.Router();
         app.use('/api', apiRouter);
         apiRouter.use('/users', userRoutes);
-        // apiRouter.use('/session', sessionRoutes);
+        apiRouter.use('/session', sessionRoutes);
 
         app.listen(process.env.PORT, () =>
             console.log(`Listening on port ${process.env.PORT}`)
