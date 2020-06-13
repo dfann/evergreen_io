@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import User from '../models/User.js';
 import { parseError, sessionizeUser } from '../util/helpers.js';
-import { signUp } from '../joi_validations/user.js';
+import { signUp, signIn } from '../joi_validations/user.js';
 import crypto from 'crypto';
 import mail from '../util/mail';
 
@@ -32,6 +32,27 @@ const createNewUser = async (req, res) => {
     }
 };
 
+const createUserSession = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        await Joi.validate({ email, password }, signIn);
+        const user = await User.findOne({ email });
+        if (user && user.comparePasswords(password)) {
+            /*middle ware */
+            const sessionUser = sessionizeUser(user);
+            req.session.user = sessionUser;
+            res.send(sessionUser);
+            /*middle ware*/
+        } else {
+            res.status(401).send(
+                parseError({ mesage: 'Invalid login credentials' })
+            );
+        }
+    } catch (err) {
+        res.status(401).send(parseError(err));
+    }
+};
+
 const forgotPassword = async ({ body: { email } }, res) => {
     const user = await User.findOne({ email });
     if (!user) {
@@ -47,7 +68,7 @@ const forgotPassword = async ({ body: { email } }, res) => {
     mail.send();
 };
 
-export { createNewUser, forgotPassword };
+export { createNewUser, createUserSession, forgotPassword };
 
 // exports.register = async (req, res, next) => {
 //   const user = new User({ email: req.body.email, username: req.body.username });

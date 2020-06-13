@@ -1,5 +1,5 @@
 import 'dotenv/config.js';
-import { createNewUser, forgotPassword } from './user';
+import { createNewUser, createUserSession, forgotPassword } from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import { mockResponse, mockRequest } from '../test_util/mock-req-res.js';
@@ -283,13 +283,120 @@ describe('createNewUser', () => {
 });
 
 describe('createUserSession', () => {
-    test.todo('it should require user to exist');
+    let connection;
 
-    test.todo('it should require password to be correct');
+    beforeAll(async () => {
+        connection = await mongoose.connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+        });
+    });
 
-    test.todo('it should set userSession in request');
+    afterAll(async () => {
+        await mongoose.connection.close();
+    });
 
-    test.todo('it should send userSession');
+    it('should require user to exist', async () => {
+        const requestOptions = {
+            body: {
+                email: testEmail,
+                password: testPassword,
+            },
+            session: {},
+        };
+
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        await createUserSession(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.send).toHaveBeenCalledWith(
+            '{"mesage":"Invalid login credentials"}'
+        );
+    });
+
+    describe('with user', () => {
+        afterEach(async () => {
+            await User.deleteMany({});
+        });
+
+        it('should require password to be correct', async () => {
+            let user = await new User({
+                username: testUsername,
+                email: testEmail,
+                password: testPassword,
+            });
+            await user.save();
+
+            const requestOptions = {
+                body: {
+                    email: testEmail,
+                    password: testPassword + 'w',
+                },
+                session: {},
+            };
+
+            const req = mockRequest(requestOptions);
+            const res = mockResponse();
+
+            await createUserSession(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(401);
+            expect(res.send).toHaveBeenCalledWith(
+                '{"mesage":"Invalid login credentials"}'
+            );
+        });
+
+        it('should set userSession in request', async () => {
+            let user = await new User({
+                username: testUsername,
+                email: testEmail,
+                password: testPassword,
+            });
+            await user.save();
+
+            const requestOptions = {
+                body: {
+                    email: testEmail,
+                    password: testPassword,
+                },
+                session: {},
+            };
+
+            const req = mockRequest(requestOptions);
+            const res = mockResponse();
+
+            await createUserSession(req, res);
+
+            expect(req.session).toHaveProperty('user');
+            expect(req.session.user).toHaveProperty('userId');
+            expect(req.session.user.username).toEqual(testUsername);
+        });
+
+        it('should send userSession', async () => {
+            let user = await new User({
+                username: testUsername,
+                email: testEmail,
+                password: testPassword,
+            });
+            await user.save();
+
+            const requestOptions = {
+                body: {
+                    email: testEmail,
+                    password: testPassword,
+                },
+                session: {},
+            };
+
+            const req = mockRequest(requestOptions);
+            const res = mockResponse();
+
+            await createUserSession(req, res);
+
+            expect(res.send).toHaveBeenCalledWith(req.session.user);
+        });
+    });
 });
 
 describe('destoryUserSession', () => {
