@@ -1,8 +1,11 @@
 import 'dotenv/config.js';
-import { createNewUser } from './user';
+import { createNewUser, forgotPassword } from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import { mockResponse, mockRequest } from '../test_util/mock-req-res.js';
+import mail from '../util/mail';
+
+jest.mock('../util/mail');
 
 const testEmail = 'test@email.com';
 const testPassword = 'Sup3r@S3cr3t';
@@ -11,6 +14,7 @@ const userObject = {
     username: 'testUserName',
     email: 'test@email.com',
 };
+
 describe('createNewUser', () => {
     let connection;
 
@@ -275,5 +279,100 @@ describe('createNewUser', () => {
                 '{"message":"User validation failed: email: Email already exists","errors":{},"_message":"User validation failed"}'
             );
         });
+    });
+});
+
+describe('createUserSession', () => {
+    test.todo('it should require user to exist');
+
+    test.todo('it should require password to be correct');
+
+    test.todo('it should set userSession in request');
+
+    test.todo('it should send userSession');
+});
+
+describe('destoryUserSession', () => {
+    test.todo('it should require user session to exist');
+
+    test.todo('it should destory user session');
+
+    test.todo('it should clear cookies');
+
+    test.todo('it should send userSession');
+});
+
+describe('getUserSession', () => {
+    test.todo('it should send userSession');
+});
+
+describe('forgotPassword', () => {
+    let connection;
+
+    beforeAll(async () => {
+        connection = await mongoose.connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+        });
+    });
+
+    afterAll(async () => {
+        await mongoose.connection.close();
+    });
+
+    afterEach(async () => {
+        await User.deleteMany({});
+    });
+
+    it('it should require user to exist', async () => {
+        const requestOptions = { body: { email: testEmail } };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        await forgotPassword(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.send).toHaveBeenCalledWith({
+            message: 'A reset link has been sent to the given email address.',
+        });
+    });
+
+    it('it should set reset token and expiry on user', async () => {
+        let user = await new User({
+            username: testUsername,
+            email: testEmail,
+            password: testPassword,
+        });
+        mail.send.mockReturnValueOnce();
+        await user.save();
+
+        const requestOptions = { body: { email: testEmail } };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        await forgotPassword(req, res);
+
+        user = await User.findOne({ email: testEmail });
+
+        expect(user.resetPasswordExpires).not.toBeNull();
+        expect(user.resetPasswordToken).not.toBeNull();
+    });
+
+    it('it should send an email', async () => {
+        let user = await new User({
+            username: testUsername,
+            email: testEmail,
+            password: testPassword,
+        });
+
+        mail.send.mockReturnValueOnce();
+        await user.save();
+
+        const requestOptions = { body: { email: testEmail } };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        await forgotPassword(req, res);
+
+        expect(mail.send).toHaveBeenCalled();
     });
 });

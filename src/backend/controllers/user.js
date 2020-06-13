@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import { parseError, sessionizeUser } from '../util/helpers.js';
 import { signUp } from '../joi_validations/user.js';
 import crypto from 'crypto';
+import mail from '../util/mail';
 
 // exports.validateRegister = (req, res, next) => {
 
@@ -31,7 +32,23 @@ const createNewUser = async (req, res) => {
     }
 };
 
-export { createNewUser };
+const forgotPassword = async ({ body: { email } }, res) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+        res.status(200).send({
+            message: 'A reset link has been sent to the given email address.',
+        });
+        return;
+    }
+    user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+    await user.save({ validateModifiedOnly: true });
+
+    mail.send();
+};
+
+export { createNewUser, forgotPassword };
+
 // exports.register = async (req, res, next) => {
 //   const user = new User({ email: req.body.email, username: req.body.username });
 //   const register = promisify(User.register, User);
