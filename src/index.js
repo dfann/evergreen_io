@@ -3,10 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './frontend/components/App';
+import { checkLoggedIn } from './frontend/util/session';
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+const renderApp = (preloadedState) => {
+    ReactDOM.render(
+        <React.StrictMode>
+            <App preSession={preloadedState.session} />
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+};
+
+(async () => renderApp(await checkLoggedIn()))();

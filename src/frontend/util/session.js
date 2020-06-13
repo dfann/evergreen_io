@@ -26,7 +26,7 @@ export const logout = () =>
     fetch('api/session', { method: 'DELETE', mode: 'cors' });
 
 export const checkLoggedIn = async (preloadedState) => {
-    const response = await fetch('http://localhost:80//api/session');
+    const response = await fetch('http://localhost:80/api/session');
     const { user } = await response.json();
     let userSession = { session: { userId: null, username: null } };
     if (user) {
