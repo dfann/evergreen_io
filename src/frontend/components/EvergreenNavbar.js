@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 
 const EvergreenNavbar = () => (
     <Navbar>

@@ -5,8 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
-import questions from './evergreen_data/questions';
-import attempts from './evergreen_data/attempts';
+import questions from '../evergreen_data/questions';
+import attempts from '../evergreen_data/attempts';
 import EvergreenNavbar from './EvergreenNavbar';
 
 const QuestionsPage = () => {

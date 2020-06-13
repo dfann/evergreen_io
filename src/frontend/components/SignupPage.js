@@ -37,7 +37,7 @@ const Signup = () => {
             password,
             confirmPassword,
         };
-        const response = await fetch('http://localhost:80/register', {
+        const response = await fetch('http://localhost:80/api/users', {
             method: 'POST',
             mode: 'cors', // no-cors,
             body: JSON.stringify(body),
