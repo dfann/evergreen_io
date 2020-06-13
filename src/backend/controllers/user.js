@@ -1,5 +1,7 @@
 import Joi from 'joi';
 import User from '../models/User.js';
+import { parseError, sessionizeUser } from '../util/helpers.js';
+import { signUp } from '../joi_validations/user.js';
 import crypto from 'crypto';
 
 // exports.validateRegister = (req, res, next) => {

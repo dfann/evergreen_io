@@ -1,10 +1,8 @@
+import 'dotenv/config.js';
 import { createNewUser } from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
-import { mockResponse, mockRequest } from '../test_util/mock-req-res';
-import mail from '../util/mail';
-
-jest.mock('../util/mail');
+import { mockResponse, mockRequest } from '../test_util/mock-req-res.js';
 
 const testEmail = 'test@email.com';
 const testPassword = 'Sup3r@S3cr3t';
