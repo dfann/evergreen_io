@@ -1,11 +1,15 @@
-import React, { useState, isValidElement } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EvergreenNavbar from './EvergreenNavbar';
+import SessionContext from '../context/session-context';
+
 const Signup = () => {
+    const session = useContext(SessionContext);
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -31,26 +35,13 @@ const Signup = () => {
 
     const handleSubmit = async (event) => {
         //Turn into a json packet
-        const body = {
+        const user = {
             email,
             username,
             password,
             confirmPassword,
         };
-        const response = await fetch('http://localhost:80/api/users', {
-            method: 'POST',
-            mode: 'cors', // no-cors,
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const json = await response.json();
-        console.log(json);
-
-        //Send to back end
-        //Store session cookie
+        session.signup(user);
     };
 
     return (
