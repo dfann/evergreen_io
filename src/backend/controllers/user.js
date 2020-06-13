@@ -58,7 +58,7 @@ const destoryUserSession = ({ session = {} }, res) => {
             /*middle ware*/
             session.destroy((err) => {
                 if (err) throw err;
-                res.clearCookie(SESS_NAME);
+                res.clearCookie(process.env.SESS_NAME);
                 res.send(user);
                 /* middleware*/
             });

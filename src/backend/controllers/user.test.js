@@ -420,11 +420,62 @@ describe('destoryUserSession', () => {
         });
     });
 
-    test.todo('it should destory user session');
+    it('should destory user session', () => {
+        const requestOptions = {
+            body: {
+                email: testEmail,
+                password: testPassword,
+            },
+            session: {
+                user: session,
+                destroy: jest.fn().mockImplementation((cb) => cb()),
+            },
+        };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
 
-    test.todo('it should clear cookies');
+        destoryUserSession(req, res);
 
-    test.todo('it should send userSession');
+        expect(req.session.destroy).toHaveBeenCalled();
+    });
+
+    it('should clear cookies', () => {
+        const requestOptions = {
+            body: {
+                email: testEmail,
+                password: testPassword,
+            },
+            session: {
+                user: session,
+                destroy: jest.fn().mockImplementation((cb) => cb()),
+            },
+        };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+        process.env.SESS_NAME = 'sessionName';
+        destoryUserSession(req, res);
+
+        expect(res.clearCookie).toHaveBeenCalledWith(process.env.SESS_NAME);
+    });
+
+    it('should send userSession', () => {
+        const requestOptions = {
+            body: {
+                email: testEmail,
+                password: testPassword,
+            },
+            session: {
+                user: session,
+                destroy: jest.fn().mockImplementation((cb) => cb()),
+            },
+        };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+        process.env.SESS_NAME = 'sessionName';
+        destoryUserSession(req, res);
+
+        expect(res.send).toHaveBeenCalledWith(req.session.user);
+    });
 });
 
 describe('getUserSession', () => {
