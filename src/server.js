@@ -21,7 +21,7 @@ import { userRoutes, sessionRoutes } from './backend/routes/index.js';
         app.disable('x-powered-by');
         app.use(express.urlencoded({ extended: true }));
         app.use(cors());
-        app.use(express.json());        
+        app.use(express.json());
         app.use(
             session({
                 name: process.env.SESS_NAME,

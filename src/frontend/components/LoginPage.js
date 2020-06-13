@@ -10,10 +10,10 @@ import Toast from 'react-bootstrap/Toast';
 
 const Signup = () => {
     const [showToast, setShowToast] = useState(false);
-    const [username , setUsername] = useState('');
-    const [password , setPassword] = useState('');
-    const [email , setEmail] = useState('');
-    
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+
     return (
         <div>
             <EvergreenNavbar />
