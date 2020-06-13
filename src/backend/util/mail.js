@@ -25,7 +25,6 @@ const generateHTML = (filename, options = {}) => {
 const send = async (options) => {
     // const html = generateHTML(options.filename, options);
     // const text = htmlToText.fromString(html);
-
     // const mailOptions = {
     //     from: `Wes Bos <noreply@wesbos.com>`,
     //     to: options.user.email,
@@ -37,4 +36,4 @@ const send = async (options) => {
     // return sendMail(mailOptions);
 };
 
-export default {send}
+export default { send };

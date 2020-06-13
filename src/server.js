@@ -5,7 +5,7 @@ mongoose.set('useUnifiedTopology', true);
 import session from 'express-session';
 import connectStore from 'connect-mongo';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser';
 import { userRoutes, sessionRoutes } from './backend/routes/index.js';
 // import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 
@@ -23,6 +23,7 @@ import { userRoutes, sessionRoutes } from './backend/routes/index.js';
         app.use(express.urlencoded({ extended: true }));
         app.use(cors());
         app.use(express.json());
+        app.use(cookieParser(process.env.SESS_SECRET));
         app.use(
             session({
                 name: process.env.SESS_NAME,
