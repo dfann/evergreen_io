@@ -44,9 +44,7 @@ const createUserSession = async (req, res) => {
             res.send(sessionUser);
             /*middle ware*/
         } else {
-            res.status(401).send(
-                parseError({ mesage: 'Invalid login credentials' })
-            );
+            res.status(401).send({ mesage: 'Invalid login credentials' });
         }
     } catch (err) {
         res.status(401).send(parseError(err));

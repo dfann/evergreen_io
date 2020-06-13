@@ -317,9 +317,9 @@ describe('createUserSession', () => {
         await createUserSession(req, res);
 
         expect(res.status).toHaveBeenCalledWith(401);
-        expect(res.send).toHaveBeenCalledWith(
-            '{"mesage":"Invalid login credentials"}'
-        );
+        expect(res.send).toHaveBeenCalledWith({
+            mesage: 'Invalid login credentials',
+        });
     });
 
     describe('with user', () => {
@@ -349,9 +349,9 @@ describe('createUserSession', () => {
             await createUserSession(req, res);
 
             expect(res.status).toHaveBeenCalledWith(401);
-            expect(res.send).toHaveBeenCalledWith(
-                '{"mesage":"Invalid login credentials"}'
-            );
+            expect(res.send).toHaveBeenCalledWith({
+                mesage: 'Invalid login credentials',
+            });
         });
 
         it('should set userSession in request', async () => {
