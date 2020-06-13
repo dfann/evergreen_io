@@ -8,6 +8,7 @@ import AddQuestionPage from './AddQuestionPage';
 import SessionContext from '../context/session-context';
 import ViewQuestionPage from './ViewQuestionPage';
 import * as sessionUtil from '../util/session';
+import { AuthRoute, ProtectedRoute } from '../util/route';
 
 const App = ({ preSession }) => {
     const [session, setSession] = useState(preSession);
@@ -30,17 +31,20 @@ const App = ({ preSession }) => {
             <SessionContext.Provider value={{ session, login, signup, logout }}>
                 <Router>
                     <Switch>
-                        <Route
+                        <ProtectedRoute
                             path="/view/question"
                             component={ViewQuestionPage}
                         />
-                        <Route
+                        <ProtectedRoute
                             path="/add/question"
                             component={AddQuestionPage}
                         />
-                        <Route path="/questions" component={QuestionsPage} />
-                        <Route path="/login" component={LoginPage} />
-                        <Route path="/signup" component={SignupPage} />
+                        <ProtectedRoute
+                            path="/questions"
+                            component={QuestionsPage}
+                        />
+                        <AuthRoute path="/login" component={LoginPage} />
+                        <AuthRoute path="/signup" component={SignupPage} />
                         <Route path="/" component={LandingPage} />
                     </Switch>
                 </Router>
