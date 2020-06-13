@@ -4,6 +4,7 @@ import {
     createUserSession,
     destoryUserSession,
     forgotPassword,
+    getUserSession,
 } from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
@@ -479,7 +480,19 @@ describe('destoryUserSession', () => {
 });
 
 describe('getUserSession', () => {
-    test.todo('it should send userSession');
+    it('should send userSession', () => {
+        const requestOptions = {
+            session: {
+                user: session,
+            },
+        };
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        getUserSession(req, res);
+
+        expect(res.send).toHaveBeenCalledWith({ user: req.session.user });
+    });
 });
 
 describe('forgotPassword', () => {

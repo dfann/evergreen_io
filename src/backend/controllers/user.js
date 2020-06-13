@@ -85,7 +85,17 @@ const forgotPassword = async ({ body: { email } }, res) => {
     mail.send();
 };
 
-export { createNewUser, createUserSession, destoryUserSession, forgotPassword };
+const getUserSession = ({ session: { user } }, res) => {
+    res.send({ user });
+};
+
+export {
+    createNewUser,
+    createUserSession,
+    destoryUserSession,
+    forgotPassword,
+    getUserSession,
+};
 
 // exports.register = async (req, res, next) => {
 //   const user = new User({ email: req.body.email, username: req.body.username });
