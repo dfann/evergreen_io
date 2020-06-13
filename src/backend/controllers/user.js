@@ -53,6 +53,25 @@ const createUserSession = async (req, res) => {
     }
 };
 
+const destoryUserSession = ({ session = {} }, res) => {
+    try {
+        const user = session.user;
+        if (user) {
+            /*middle ware*/
+            session.destroy((err) => {
+                if (err) throw err;
+                res.clearCookie(SESS_NAME);
+                res.send(user);
+                /* middleware*/
+            });
+        } else {
+            throw new Error('Something went wrong');
+        }
+    } catch (err) {
+        res.status(422).send(parseError(err));
+    }
+};
+
 const forgotPassword = async ({ body: { email } }, res) => {
     const user = await User.findOne({ email });
     if (!user) {
@@ -68,7 +87,7 @@ const forgotPassword = async ({ body: { email } }, res) => {
     mail.send();
 };
 
-export { createNewUser, createUserSession, forgotPassword };
+export { createNewUser, createUserSession, destoryUserSession, forgotPassword };
 
 // exports.register = async (req, res, next) => {
 //   const user = new User({ email: req.body.email, username: req.body.username });

@@ -9,7 +9,7 @@ export const mockResponse = () => {
     return res;
 };
 
-export const mockRequest = ({ body = null, session = null }) => {
+export const mockRequest = ({ body, session }) => {
     return {
         body,
         session,

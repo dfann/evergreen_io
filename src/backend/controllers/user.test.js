@@ -1,5 +1,10 @@
 import 'dotenv/config.js';
-import { createNewUser, createUserSession, forgotPassword } from './user';
+import {
+    createNewUser,
+    createUserSession,
+    destoryUserSession,
+    forgotPassword,
+} from './user';
 import mongoose from 'mongoose';
 import User from '../models/user';
 import { mockResponse, mockRequest } from '../test_util/mock-req-res.js';
@@ -14,6 +19,7 @@ const userObject = {
     username: 'testUserName',
     email: 'test@email.com',
 };
+const session = { userId: 'testSession', username: testUsername };
 
 describe('createNewUser', () => {
     let connection;
@@ -250,9 +256,10 @@ describe('createNewUser', () => {
             await createNewUser(req, res);
 
             expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.send).toHaveBeenCalledWith(
-                '{"message":"User validation failed: username: Username already exists","errors":{},"_message":"User validation failed"}'
-            );
+            expect(res.send).toHaveBeenCalledWith({
+                message:
+                    'User validation failed: username: Username already exists',
+            });
         });
 
         it('should require unique email', async () => {
@@ -275,9 +282,9 @@ describe('createNewUser', () => {
             await createNewUser(req, res);
 
             expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.send).toHaveBeenCalledWith(
-                '{"message":"User validation failed: email: Email already exists","errors":{},"_message":"User validation failed"}'
-            );
+            expect(res.send).toHaveBeenCalledWith({
+                message: 'User validation failed: email: Email already exists',
+            });
         });
     });
 });
@@ -400,7 +407,18 @@ describe('createUserSession', () => {
 });
 
 describe('destoryUserSession', () => {
-    test.todo('it should require user session to exist');
+    it('should require user session to exist', async () => {
+        const requestOptions = {};
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        destoryUserSession(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+        expect(res.send).toHaveBeenCalledWith({
+            message: 'Something went wrong',
+        });
+    });
 
     test.todo('it should destory user session');
 
