@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -7,12 +7,41 @@ import Col from 'react-bootstrap/Col';
 import EvergreenNavbar from './EvergreenNavbar';
 import { Link } from 'react-router-dom';
 import Toast from 'react-bootstrap/Toast';
+import SessionContext from '../context/session-context';
 
 const Signup = () => {
+    const session = useContext(SessionContext);
+
     const [showToast, setShowToast] = useState(false);
-    const [username, setUsername] = useState('');
+    const [resetPasswordEmail, setresetPasswordEmail] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+
+    const handleChange = ({ target }) => {
+        const { name, value } = target;
+        switch (name) {
+            case 'email':
+                setEmail(value);
+                break;
+            case 'resetPasswordEmail':
+                setresetPasswordEmail(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+        }
+    };
+
+    const handleLoginSubmit = async (event) => {
+        const creds = {
+            email,
+            password,
+        };
+
+        session.login(creds);
+    };
+
+    const handlePasswordReset = async (event) => {};
 
     return (
         <div>
@@ -32,36 +61,47 @@ const Signup = () => {
             <Container>
                 <Row>
                     <Col xs={{ offset: 2, span: 3 }}>
-                        <Form className="Form">
+                        <Form
+                            className="Form"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleLoginSubmit();
+                                return false;
+                            }}
+                        >
                             <div className="page-header">
                                 <h1>Login</h1>
                             </div>
 
                             <Form.Group controlId="formUsername">
-                                <Form.Label>Username</Form.Label>
+                                <Form.Label>Email</Form.Label>
                                 <Form.Control
+                                    name="email"
+                                    value={email}
+                                    onChange={handleChange}
                                     type="input"
-                                    placeholder="Username"
+                                    placeholder="Email"
                                 />
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
+                                    name="password"
+                                    value={password}
+                                    onChange={handleChange}
                                     type="password"
                                     placeholder="Password"
                                 />
                             </Form.Group>
 
-                            <Link to="/questions">
-                                <Button
-                                    className="btn btn-success"
-                                    variant="primary"
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            </Link>
+                            <Button
+                                className="btn btn-success"
+                                variant="primary"
+                                type="submit"
+                            >
+                                Submit
+                            </Button>
                         </Form>
                     </Col>
                     <Col xs={{ offset: 2, span: 5 }}>
@@ -69,6 +109,7 @@ const Signup = () => {
                             className="Form"
                             onSubmit={(e) => {
                                 e.preventDefault();
+                                handlePasswordReset();
                                 setShowToast(true);
                                 return false;
                             }}
@@ -79,6 +120,9 @@ const Signup = () => {
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
+                                    name="resetPasswordEmail"
+                                    value={resetPasswordEmail}
+                                    onChange={handleChange}
                                     type="email"
                                     placeholder="Enter email"
                                 />
