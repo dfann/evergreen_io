@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from '../logo.svg';
 import SessionContext from '../context/session-context';
@@ -6,7 +7,13 @@ import Button from 'react-bootstrap/Button';
 
 const EvergreenNavbar = () => {
     const session = useContext(SessionContext);
-
+    const logOut = session.session.username ? (
+        <Nav className="ml-auto">
+            <Button onClick={session.logout} variant="link">
+                Logout
+            </Button>
+        </Nav>
+    ) : null;
     return (
         <Navbar>
             <Navbar.Brand href="/">
@@ -19,9 +26,7 @@ const EvergreenNavbar = () => {
                 />{' '}
                 Evergreen.io
             </Navbar.Brand>
-            <Button onClick={session.logout} variant="link">
-                Logout
-            </Button>
+            {logOut}
         </Navbar>
     );
 };
