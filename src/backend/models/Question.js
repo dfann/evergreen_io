@@ -3,9 +3,9 @@ import bcryptjs from 'bcryptjs';
 
 const QuestionSchema = new mongoose.Schema(
     {
-        userId : {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
         },
         title: {
             type: String,
@@ -13,7 +13,7 @@ const QuestionSchema = new mongoose.Schema(
                 validator: (title) => Question.doesNotExist({ title }),
                 message: 'Question with that title already exists',
             },
-        },        
+        },
         category: {
             type: String,
             required: true,
@@ -32,19 +32,16 @@ const QuestionSchema = new mongoose.Schema(
         },
         isMarkdownSolution: {
             type: Boolean,
-                        
         },
         solution: {
             type: String,
-            
         },
         isMarkdownNotes: {
             type: Boolean,
-            
         },
         notes: {
-            type: String,          
-        },        
+            type: String,
+        },
     },
     {
         timestamps: true,

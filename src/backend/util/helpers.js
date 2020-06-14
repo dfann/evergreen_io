@@ -15,12 +15,10 @@ export const sessionizeUser = (user) => {
 export const sanatize = (inputs) => {
     const sanatizedInputs = [];
     for (const input of inputs) {
-        if(typeof input === 'string')
-        {
-        sanatizedInputs.push(DOMPurify.sanitize(input));
-        }
-        else{
-            sanatizedInputs.push(input)
+        if (typeof input === 'string') {
+            sanatizedInputs.push(DOMPurify.sanitize(input));
+        } else {
+            sanatizedInputs.push(input);
         }
     }
     return sanatizedInputs;

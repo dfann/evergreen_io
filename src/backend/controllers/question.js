@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import Question from '../models/Question.js'
+import Question from '../models/Question.js';
 import { parseError, sanatize } from '../util/helpers.js';
 import { newQuestion } from '../joi_validations/question.js';
 
@@ -10,7 +10,7 @@ const createNewQuestion = async (req, res) => {
         }
         const question = await _createQuestionObject(req);
         const questionModel = new Question(question);
-        await questionModel.save()
+        await questionModel.save();
         res.status(200).send(question);
     } catch (err) {
         res.status(400).send(parseError(err));

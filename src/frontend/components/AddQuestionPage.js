@@ -13,6 +13,7 @@ const Signup = () => {
     const [showToast, setShowToast] = useState(false);
 
     const [title, setTitle] = useState('');
+    const [category, setCategory] = useState('');
     const [url, setURL] = useState('');
     const [isMarkdownDescription, setIsMarkdownDescription] = useState(false);
     const [description, setDescription] = useState('');
@@ -27,6 +28,9 @@ const Signup = () => {
         switch (name) {
             case 'title':
                 setTitle(value);
+                break;
+            case 'category':
+                setCategory(value);
                 break;
             case 'url':
                 setURL(value);
@@ -83,6 +87,17 @@ const Signup = () => {
                                     onChange={handleChange}
                                     type="input"
                                     placeholder="Title"
+                                />
+                            </Form.Group>
+
+                            <Form.Group controlId="formCategory">
+                                <Form.Label>Category</Form.Label>
+                                <Form.Control
+                                    name="category"
+                                    value={category}
+                                    onChange={handleChange}
+                                    type="input"
+                                    placeholder="Category"
                                 />
                             </Form.Group>
 

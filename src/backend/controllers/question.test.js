@@ -27,7 +27,18 @@ const testQuestion = {
     notes: 'Test Notes',
 };
 
-const testQuestionModel = {"category": "testCategory","description": "Test Description", "isMarkdownDescription": true, "isMarkdownNotes": false, "isMarkdownSolution": true, "notes": "Test Notes", "solution": "Test Solution", "title": "testTitle", "url": "http://example.com/", "userId": "testSession"}
+const testQuestionModel = {
+    category: 'testCategory',
+    description: 'Test Description',
+    isMarkdownDescription: true,
+    isMarkdownNotes: false,
+    isMarkdownSolution: true,
+    notes: 'Test Notes',
+    solution: 'Test Solution',
+    title: 'testTitle',
+    url: 'http://example.com/',
+    userId: 'testSession',
+};
 
 describe('createNewQuestion', () => {
     let connection;
@@ -56,7 +67,12 @@ describe('createNewQuestion', () => {
         await createNewQuestion(req, res);
 
         expect(res.status).toHaveBeenCalledWith(400);
-        const responseBody = {"context": {"key": "title", "label": "title"}, "message": "\"title\" is required", "path": ["title"], "type": "any.required"}
+        const responseBody = {
+            context: { key: 'title', label: 'title' },
+            message: '"title" is required',
+            path: ['title'],
+            type: 'any.required',
+        };
         expect(res.send).toHaveBeenCalledWith(responseBody);
     });
 
@@ -86,7 +102,12 @@ describe('createNewQuestion', () => {
             path: ['description'],
             type: 'any.empty',
         };
-        expect(res.send).toHaveBeenCalledWith({"context": {"key": "description", "label": "description"}, "message": "\"description\" is required", "path": ["description"], "type": "any.required"});
+        expect(res.send).toHaveBeenCalledWith({
+            context: { key: 'description', label: 'description' },
+            message: '"description" is required',
+            path: ['description'],
+            type: 'any.required',
+        });
     });
 
     it('should require a category', async () => {
@@ -104,10 +125,14 @@ describe('createNewQuestion', () => {
         await createNewQuestion(req, res);
 
         expect(res.status).toHaveBeenCalledWith(400);
-        const responseBody = {"context": {"key": "category", "label": "category"}, "message": "\"category\" is required", "path": ["category"], "type": "any.required"};
+        const responseBody = {
+            context: { key: 'category', label: 'category' },
+            message: '"category" is required',
+            path: ['category'],
+            type: 'any.required',
+        };
         expect(res.send).toHaveBeenCalledWith(responseBody);
     });
-
 
     it('should require a session', async () => {
         const question = JSON.parse(JSON.stringify(testQuestion));
@@ -191,8 +216,8 @@ describe('createNewQuestion', () => {
         await createNewQuestion(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.send).toHaveBeenCalledWith(testQuestionModel)
-    });    
+        expect(res.send).toHaveBeenCalledWith(testQuestionModel);
+    });
 
     describe('saving question', () => {
         afterEach(async () => {
@@ -202,27 +227,24 @@ describe('createNewQuestion', () => {
         it('should sanatize inputs', async () => {
             const question = JSON.parse(JSON.stringify(testQuestion));
             question.title = '<img src=x onerror=alert(1)//>';
-    
+
             const requestOptions = {
                 body: question,
                 session,
             };
-    
+
             const req = mockRequest(requestOptions);
             const res = mockResponse();
-    
+
             await createNewQuestion(req, res);
-    
+
             const questionModel = JSON.parse(JSON.stringify(testQuestionModel));
-            questionModel.title = "<img src=\"x\">"
+            questionModel.title = '<img src="x">';
             expect(res.send).toHaveBeenCalledWith(questionModel);
             expect(res.status).toHaveBeenCalledWith(200);
-            
         });
 
         test.todo('It should require title to be unique');
         test.todo('It should save question');
     });
-
-    
 });
