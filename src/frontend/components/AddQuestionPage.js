@@ -38,13 +38,6 @@ const Signup = () => {
             case 'description':
                 setDescription(value);
                 break;
-            case 'isMarkdownDescription':
-                booleanValue = value === 'true';
-                setIsMarkdownDescription(!booleanValue);
-                break;
-            case 'description':
-                setDescription(value);
-                break;
             case 'isMarkdownSolution':
                 booleanValue = value === 'true';
                 setIsMarkdownSolution(!booleanValue);
@@ -52,7 +45,6 @@ const Signup = () => {
             case 'solution':
                 setSolution(value);
                 break;
-
             case 'isMarkdownNotes':
                 booleanValue = value === 'true';
                 setIsMarkdownNotes(!booleanValue);
@@ -63,13 +55,22 @@ const Signup = () => {
         }
     };
 
+    const handleSubmit = async () => {};
+
     return (
         <div>
             <EvergreenNavbar />
             <Container>
                 <Row>
                     <Col>
-                        <Form className="Form">
+                        <Form
+                            className="Form"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSubmit();
+                                return false;
+                            }}
+                        >
                             <div className="page-header">
                                 <h1>Add A Question</h1>
                             </div>
