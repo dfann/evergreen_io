@@ -24,6 +24,7 @@ const App = ({ preSession }) => {
 
     const logout = async () => {
         await sessionUtil.logout();
+        setSession({ session: { userId: null, username: null } });
     };
 
     return (
