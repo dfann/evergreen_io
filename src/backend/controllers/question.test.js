@@ -33,7 +33,7 @@ const testQuestion = {
    };
 
 describe('createNewQuestion', () => {
-
+    let connection; 
     beforeAll(async () => {
         connection = await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
@@ -44,7 +44,7 @@ describe('createNewQuestion', () => {
         await mongoose.connection.close();
     });
 
-    it('should require a title', () => {
+    it('should require a title', async () => {
         const question = JSON.parse(JSON.stringify(testQuestion));
         delete question.title;
         
@@ -66,6 +66,5 @@ describe('createNewQuestion', () => {
     test.todo('It should sanatize inputs')    
     test.todo('IT should attach questions to userid of session to question')
     test.todo('It should save question')
-    test.todo()
-    test.todo()
+   
 });
