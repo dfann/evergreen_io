@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import Question from '../models/Question.js'
 import { parseError, sanatize } from '../util/helpers.js';
 import { newQuestion } from '../joi_validations/question.js';
 
@@ -8,6 +9,8 @@ const createNewQuestion = async (req, res) => {
             throw new Error('No session found');
         }
         const question = await _createQuestionObject(req);
+        const questionModel = new Question(question);
+        await questionModel.save()
         res.status(200).send(question);
     } catch (err) {
         res.status(400).send(parseError(err));
@@ -17,6 +20,7 @@ const createNewQuestion = async (req, res) => {
 const _createQuestionObject = async (req) => {
     let {
         title,
+        category,
         url,
         isMarkdownDescription,
         description,
@@ -27,6 +31,7 @@ const _createQuestionObject = async (req) => {
     } = req.body;
     [
         title,
+        category,
         url,
         isMarkdownDescription,
         description,
@@ -36,6 +41,7 @@ const _createQuestionObject = async (req) => {
         notes,
     ] = sanatize([
         title,
+        category,
         url,
         isMarkdownDescription,
         description,
@@ -47,6 +53,7 @@ const _createQuestionObject = async (req) => {
     await Joi.validate(
         {
             title,
+            category,
             url,
             isMarkdownDescription,
             description,
@@ -61,6 +68,7 @@ const _createQuestionObject = async (req) => {
     const question = {
         userId,
         title,
+        category,
         url,
         isMarkdownDescription,
         description,

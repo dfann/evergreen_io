@@ -17,14 +17,17 @@ const userObject = {
 const session = { userId: 'testSession', username: testUsername };
 const testQuestion = {
     title: 'testTitle',
+    category: 'testCategory',
     url: 'http://example.com/',
-    isMarkdownDescription: 'false',
+    isMarkdownDescription: true,
     description: 'Test Description',
-    isMarkdownSolution: 'true',
+    isMarkdownSolution: true,
     solution: 'Test Solution',
-    isMarkdownNotes: 'true',
+    isMarkdownNotes: false,
     notes: 'Test Notes',
 };
+
+const testQuestionModel = {"category": "testCategory","description": "Test Description", "isMarkdownDescription": true, "isMarkdownNotes": false, "isMarkdownSolution": true, "notes": "Test Notes", "solution": "Test Solution", "title": "testTitle", "url": "http://example.com/", "userId": "testSession"}
 
 describe('createNewQuestion', () => {
     let connection;
@@ -53,17 +56,7 @@ describe('createNewQuestion', () => {
         await createNewQuestion(req, res);
 
         expect(res.status).toHaveBeenCalledWith(400);
-        const responseBody = {
-            context: {
-                invalids: [''],
-                key: 'title',
-                label: 'title',
-                value: '',
-            },
-            message: '"title" is not allowed to be empty',
-            path: ['title'],
-            type: 'any.empty',
-        };
+        const responseBody = {"context": {"key": "title", "label": "title"}, "message": "\"title\" is required", "path": ["title"], "type": "any.required"}
         expect(res.send).toHaveBeenCalledWith(responseBody);
     });
 
@@ -93,8 +86,28 @@ describe('createNewQuestion', () => {
             path: ['description'],
             type: 'any.empty',
         };
+        expect(res.send).toHaveBeenCalledWith({"context": {"key": "description", "label": "description"}, "message": "\"description\" is required", "path": ["description"], "type": "any.required"});
+    });
+
+    it('should require a category', async () => {
+        const question = JSON.parse(JSON.stringify(testQuestion));
+        delete question.category;
+
+        const requestOptions = {
+            body: question,
+            session,
+        };
+
+        const req = mockRequest(requestOptions);
+        const res = mockResponse();
+
+        await createNewQuestion(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        const responseBody = {"context": {"key": "category", "label": "category"}, "message": "\"category\" is required", "path": ["category"], "type": "any.required"};
         expect(res.send).toHaveBeenCalledWith(responseBody);
     });
+
 
     it('should require a session', async () => {
         const question = JSON.parse(JSON.stringify(testQuestion));
@@ -164,23 +177,6 @@ describe('createNewQuestion', () => {
         expect(res.send).toHaveBeenCalledWith(responseBody);
     });
 
-    it('should sanatize inputs', async () => {
-        const question = JSON.parse(JSON.stringify(testQuestion));
-
-        const requestOptions = {
-            body: question,
-            session,
-        };
-
-        const req = mockRequest(requestOptions);
-        const res = mockResponse();
-
-        await createNewQuestion(req, res);
-
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.send).toHaveBeenCalledWith(question.title);
-    });
-
     it('should attach userId to question', async () => {
         const question = JSON.parse(JSON.stringify(testQuestion));
 
@@ -194,11 +190,39 @@ describe('createNewQuestion', () => {
 
         await createNewQuestion(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.send).toHaveBeenCalledWith(testQuestionModel)
+    });    
+
+    describe('saving question', () => {
+        afterEach(async () => {
+            await User.deleteMany({});
+        });
+
+        it('should sanatize inputs', async () => {
+            const question = JSON.parse(JSON.stringify(testQuestion));
+            question.title = '<img src=x onerror=alert(1)//>';
+    
+            const requestOptions = {
+                body: question,
+                session,
+            };
+    
+            const req = mockRequest(requestOptions);
+            const res = mockResponse();
+    
+            await createNewQuestion(req, res);
+    
+            const questionModel = JSON.parse(JSON.stringify(testQuestionModel));
+            questionModel.title = "<img src=\"x\">"
+            expect(res.send).toHaveBeenCalledWith(questionModel);
+            expect(res.status).toHaveBeenCalledWith(200);
+            
+        });
+
+        test.todo('It should require title to be unique');
+        test.todo('It should save question');
     });
 
-    test.todo('IT should attach questions to userid of session to question');
-
-    test.todo('It should require title to be unique');
-    test.todo('It should save question');
+    
 });
