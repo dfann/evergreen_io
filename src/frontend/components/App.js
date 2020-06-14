@@ -45,7 +45,7 @@ const App = ({ preSession }) => {
                         />
                         <AuthRoute path="/login" component={LoginPage} />
                         <AuthRoute path="/signup" component={SignupPage} />
-                        <Route path="/" component={LandingPage} />
+                        <AuthRoute path="/" component={LandingPage} />
                     </Switch>
                 </Router>
             </SessionContext.Provider>
