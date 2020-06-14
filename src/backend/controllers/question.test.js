@@ -21,19 +21,19 @@ const userObject = {
     email: 'test@email.com',
 };
 const session = { userId: 'testSession', username: testUsername };
-const testQuestion = { 
+const testQuestion = {
     title: 'testTitle',
-    url: "http://example.com/",
+    url: 'http://example.com/',
     isMarkdownDescription: true,
-    description: "Test Description",
+    description: 'Test Description',
     isMarkdownSolution: true,
-    solution: "Test Solution",
+    solution: 'Test Solution',
     isMarkdownNotes: false,
-    notes: "Test Notes",
-   };
+    notes: 'Test Notes',
+};
 
 describe('createNewQuestion', () => {
-    let connection; 
+    let connection;
     beforeAll(async () => {
         connection = await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
@@ -47,11 +47,10 @@ describe('createNewQuestion', () => {
     it('should require a title', async () => {
         const question = JSON.parse(JSON.stringify(testQuestion));
         delete question.title;
-        
 
         const requestOptions = {
             body: question,
-            session
+            session,
         };
 
         const req = mockRequest(requestOptions);
@@ -59,12 +58,11 @@ describe('createNewQuestion', () => {
 
         await createNewQuestion(req, res);
     });
-    test.todo('It should require a description')
-    test.todo('It should require a session in requrest')
-    test.todo('It should require title to be unique')
-    test.todo('It should require url to be url format')
-    test.todo('It should sanatize inputs')    
-    test.todo('IT should attach questions to userid of session to question')
-    test.todo('It should save question')
-   
+    test.todo('It should require a description');
+    test.todo('It should require a session in requrest');
+    test.todo('It should require title to be unique');
+    test.todo('It should require url to be url format');
+    test.todo('It should sanatize inputs');
+    test.todo('IT should attach questions to userid of session to question');
+    test.todo('It should save question');
 });
