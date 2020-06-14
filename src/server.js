@@ -5,7 +5,11 @@ mongoose.set('useUnifiedTopology', true);
 import session from 'express-session';
 import connectStore from 'connect-mongo';
 import cors from 'cors';
-import { userRoutes, sessionRoutes } from './backend/routes/index.js';
+import {
+    userRoutes,
+    sessionRoutes,
+    questionRoutes,
+} from './backend/routes/index.js';
 import cookiParser from 'cookie-parser';
 // import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 
@@ -67,6 +71,7 @@ import cookiParser from 'cookie-parser';
         app.use('/api', apiRouter);
         apiRouter.use('/users', userRoutes);
         apiRouter.use('/session', sessionRoutes);
+        apiRouter.use('/questions', questionRoutes);
 
         app.listen(process.env.SERVER_PORT, () =>
             console.log(`Listening on port ${process.env.SERVER_PORT}`)
