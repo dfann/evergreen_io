@@ -75,6 +75,16 @@ const Signup = () => {
         };
         try{
             const newQuestions = await newQuestion(question);
+            console.log(newQuestion);
+            setTitle('');
+            setCategory('');
+            setURL('');
+            setIsMarkdownDescription(false);
+            setDescription('');
+            setIsMarkdownSolution(false);
+            setSolution('');
+            setIsMarkdownNotes(false);
+            setNotes('');
         }
         catch(err){
 
