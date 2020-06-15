@@ -1,13 +1,14 @@
 import Joi from 'joi';
 import User from '../models/User.js';
-import { parseError, sessionizeUser } from '../util/helpers.js';
+import { parseError, sessionizeUser, sanatize } from '../util/helpers.js';
 import { signUp, signIn } from '../joi_validations/user.js';
 import crypto from 'crypto';
 import mail from '../util/mail.js';
 
 const createNewUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        let { username, email, password } = req.body;
+        [username, email, password] = sanatize([username, email, password]);
         await Joi.validate({ username, email, password }, signUp);
         const newUser = new User({ username, email, password });
         await newUser.save();

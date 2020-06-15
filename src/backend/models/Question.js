@@ -21,7 +21,7 @@ const QuestionSchema = new mongoose.Schema(
             required: true,
         },
         url: {
-            type: String,            
+            type: String,
         },
         isMarkdownDescription: {
             type: Boolean,

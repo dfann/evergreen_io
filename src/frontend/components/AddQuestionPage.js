@@ -71,9 +71,9 @@ const Signup = () => {
             isMarkdownSolution,
             solution,
             isMarkdownNotes,
-            notes
+            notes,
         };
-        try{
+        try {
             const newQuestions = await newQuestion(question);
             console.log(newQuestion);
             setTitle('');
@@ -85,11 +85,7 @@ const Signup = () => {
             setSolution('');
             setIsMarkdownNotes(false);
             setNotes('');
-        }
-        catch(err){
-
-        }
-        
+        } catch (err) {}
     };
 
     return (
@@ -206,15 +202,13 @@ const Signup = () => {
                                 />
                             </Form.Group>
 
-                           
-                                <Button
-                                    className="btn btn-success"
-                                    variant="primary"
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            
+                            <Button
+                                className="btn btn-success"
+                                variant="primary"
+                                type="submit"
+                            >
+                                Submit
+                            </Button>
                         </Form>
                     </Col>
                 </Row>
