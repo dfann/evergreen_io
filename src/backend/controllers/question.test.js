@@ -215,6 +215,7 @@ describe('createNewQuestion', () => {
 
         await createNewQuestion(req, res);
 
+        expect(res.send).toHaveBeenCalledWith(testQuestionModel);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.send).toHaveBeenCalledWith(testQuestionModel);
     });

@@ -6,6 +6,7 @@ const QuestionSchema = new mongoose.Schema(
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
+            required: true,
         },
         title: {
             type: String,
@@ -13,14 +14,14 @@ const QuestionSchema = new mongoose.Schema(
                 validator: (title) => Question.doesNotExist({ title }),
                 message: 'Question with that title already exists',
             },
+            required: true,
         },
         category: {
             type: String,
             required: true,
         },
         url: {
-            type: String,
-            required: true,
+            type: String,            
         },
         isMarkdownDescription: {
             type: Boolean,
@@ -32,12 +33,14 @@ const QuestionSchema = new mongoose.Schema(
         },
         isMarkdownSolution: {
             type: Boolean,
+            required: true,
         },
         solution: {
             type: String,
         },
         isMarkdownNotes: {
             type: Boolean,
+            required: true,
         },
         notes: {
             type: String,

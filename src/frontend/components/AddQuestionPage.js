@@ -8,6 +8,8 @@ import EvergreenNavbar from './EvergreenNavbar';
 import { Link } from 'react-router-dom';
 import Toast from 'react-bootstrap/Toast';
 import { set } from 'mongoose';
+import { newQuestion } from '../util/question';
+import questions from '../evergreen_data/questions';
 
 const Signup = () => {
     const [showToast, setShowToast] = useState(false);
@@ -59,7 +61,26 @@ const Signup = () => {
         }
     };
 
-    const handleSubmit = async () => {};
+    const handleSubmit = async () => {
+        const question = {
+            title,
+            category,
+            url,
+            isMarkdownDescription,
+            description,
+            isMarkdownSolution,
+            solution,
+            isMarkdownNotes,
+            notes
+        };
+        try{
+            const newQuestions = await newQuestion(question);
+        }
+        catch(err){
+
+        }
+        
+    };
 
     return (
         <div>
@@ -175,7 +196,7 @@ const Signup = () => {
                                 />
                             </Form.Group>
 
-                            <Link to="/questions">
+                           
                                 <Button
                                     className="btn btn-success"
                                     variant="primary"
@@ -183,7 +204,7 @@ const Signup = () => {
                                 >
                                     Submit
                                 </Button>
-                            </Link>
+                            
                         </Form>
                     </Col>
                 </Row>

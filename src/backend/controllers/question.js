@@ -10,6 +10,7 @@ const createNewQuestion = async (req, res) => {
         }
         const question = await _createQuestionObject(req);
         const questionModel = new Question(question);
+        
         await questionModel.save();
         res.status(200).send(question);
     } catch (err) {
@@ -64,7 +65,8 @@ const _createQuestionObject = async (req) => {
         },
         newQuestion
     );
-    const userId = req.session.userId;
+    
+    const userId = req.session.user.userId;
     const question = {
         userId,
         title,
