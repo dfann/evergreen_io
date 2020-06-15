@@ -1,10 +1,15 @@
 html, body {
   margin: 0;
-  height: 100%;
+  height: 100vh;
   background-image: url("../winter_trees.png");
   background-position: center; /* Center the image */
   background-size: cover; /* Resize the background image to cover the entire container */
   /* background-color: #EFEEEA; */
+}
+
+div#root{
+  height: 100vh;
+  overflow: auto;
 }
 
 textarea.Textbox-control {
