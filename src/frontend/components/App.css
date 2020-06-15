@@ -1,5 +1,10 @@
-body {
-  background-color: #EFEEEA;
+html, body {
+  margin: 0;
+  height: 100%;
+  background-image: url("../winter_trees.png");
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  /* background-color: #EFEEEA; */
 }
 
 textarea.Textbox-control {
@@ -30,7 +35,7 @@ textarea.Textbox-control {
 }
 
 .Jumbo {
-  background-color: #EFEEEA;
+  background-color: transparent;
 }
 
 .Login-Buttons {
