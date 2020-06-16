@@ -1,5 +1,5 @@
 export const newQuestion = async (question) => {
-    const response = await fetch('http://localhost:3000/api/questions', {
+    const response = await fetch(DOMAIN + '/api/questions', {
         method: 'POST',
         mode: 'cors', // no-cors,
         body: JSON.stringify(question),

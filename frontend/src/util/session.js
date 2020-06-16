@@ -1,5 +1,6 @@
+const DOMAIN = process.env.REACT_APP_API_DOMAIN
 export const signup = async (user) => {
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch(DOMAIN + '/api/users', {
         method: 'POST',
         mode: 'cors', // no-cors,
         body: JSON.stringify(user),
@@ -13,7 +14,7 @@ export const signup = async (user) => {
     return json;
 };
 export const login = async (user) => {
-    const response = await fetch('http://localhost:3000/api/session', {
+    const response = await fetch(DOMAIN + '/api/session', {
         method: 'POST',
         mode: 'cors', // no-cors,
         body: JSON.stringify(user),
@@ -26,14 +27,14 @@ export const login = async (user) => {
     return json;
 };
 export const logout = () =>
-    fetch('http://localhost:3000/api/session', {
+    fetch(DOMAIN + '/api/session', {
         method: 'DELETE',
         mode: 'cors',
         credentials: 'include',
     });
 
 export const checkLoggedIn = async (preloadedState) => {
-    const response = await fetch('http://localhost:3000/api/session', {
+    const response = await fetch(DOMAIN + '/api/session', {
         credentials: 'include',
     });
     const { user } = await response.json();
