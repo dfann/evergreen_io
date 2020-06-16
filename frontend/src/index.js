@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './frontend/components/App';
-import { checkLoggedIn } from './frontend/util/session';
+import App from './components/App';
+import { checkLoggedIn } from './util/session';
 
 const renderApp = (preloadedState) => {
     ReactDOM.render(
