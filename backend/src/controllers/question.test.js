@@ -1,5 +1,5 @@
 import 'dotenv/config.js';
-import { createNewQuestion, getQuestions } from './question';
+import { createNewQuestion, getQuestions, updateQuestion } from './question';
 import mongoose from 'mongoose';
 import Question from '../models/Question';
 const ObjectId = mongoose.Types.ObjectId;
@@ -31,6 +31,7 @@ const testQuestion = {
 };
 
 const testQuestionModel = {
+    _id: '6ee518025c86f64fa1c16d18',
     category: 'testCategory',
     description: 'Test Description',
     isMarkdownDescription: true,
@@ -387,5 +388,84 @@ describe('createNewQuestion', () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.send).toHaveBeenCalledWith(questions);
         });
+    });
+
+    describe('updateQuestion', () => {
+        let connection;
+        const questions = [
+            {
+                category: 'testCategory',
+                description: 'Test Description',
+                isMarkdownDescription: true,
+                isMarkdownNotes: false,
+                isMarkdownSolution: true,
+                notes: 'Test Notes',
+                solution: 'Test Solution',
+                title: 'testTitle0',
+                url: 'http://example.com/',
+                userId: new ObjectId('5ee518025c86f64fa1c16d18'),
+            },
+            {
+                category: 'testCategory',
+                description: 'Test Description',
+                isMarkdownDescription: true,
+                isMarkdownNotes: false,
+                isMarkdownSolution: true,
+                notes: 'Test Notes',
+                solution: 'Test Solution',
+                title: 'testTitle1',
+                url: 'http://example.com/',
+                userId: new ObjectId('5ee518025c86f64fa1c16d18'),
+            },
+            {
+                category: 'testCategory',
+                description: 'Test Description',
+                isMarkdownDescription: true,
+                isMarkdownNotes: false,
+                isMarkdownSolution: true,
+                notes: 'Test Notes',
+                solution: 'Test Solution',
+                title: 'testTitle2',
+                url: 'http://example.com/',
+                userId: new ObjectId('5ee518025c86f64fa1c16d18'),
+            },
+        ];
+
+        beforeAll(async () => {
+            connection = await mongoose.connect(process.env.MONGO_URL, {
+                useNewUrlParser: true,
+            });
+        });
+
+        afterAll(async () => {
+            await mongoose.connection.close();
+        });
+
+        beforeEach(async () => {
+            Question.collection.insert(questions);
+        });
+
+        afterEach(async () => {
+            await Question.deleteMany({});
+        });
+
+        test('should require the question to exist', async () => {
+            const questionModel = JSON.parse(JSON.stringify(testQuestionModel));
+            questionModel.title = 'new title';
+
+            const requestOptions = {
+                body: questionModel,
+                session,
+            };
+
+            const req = mockRequest(requestOptions);
+            const res = mockResponse();
+
+            await updateQuestion(req, res);
+        });
+
+        test.todo('it should update the question');
+
+        test.todo('it should return the updated question');
     });
 });

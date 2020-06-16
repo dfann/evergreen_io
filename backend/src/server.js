@@ -5,11 +5,7 @@ mongoose.set('useUnifiedTopology', true);
 import session from 'express-session';
 import connectStore from 'connect-mongo';
 import cors from 'cors';
-import {
-    userRoutes,
-    sessionRoutes,
-    questionRoutes,
-} from './routes/index.js';
+import { userRoutes, sessionRoutes, questionRoutes } from './routes/index.js';
 import cookiParser from 'cookie-parser';
 // import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 

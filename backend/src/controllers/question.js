@@ -11,10 +11,12 @@ const createNewQuestion = async (req, res) => {
             throw new Error('No session found');
         }
         const question = await _createQuestionObject(req);
-        const questionModel = new Question(question);
+        const questionDoc = new Question(question);
 
-        await questionModel.save();
-        res.status(200).send(question);
+        await questionDoc.save();
+        const questionModel = questionDoc.toJSON();
+
+        res.status(200).send(questionModel);
     } catch (err) {
         res.status(400).send(parseError(err));
     }
@@ -27,12 +29,36 @@ const getQuestions = async (req, res) => {
         }
 
         const userId = req.session.user.userId;
-        console.log(userId);
+
         const projection =
             '_id category description isMarkdownDescription isMarkdownNotes isMarkdownSolution notes solution title url userId';
         const questions = await Question.find({ userId }, projection);
 
         res.status(200).send(questions.map((x) => x.toJSON()));
+    } catch (err) {
+        res.status(400).send(parseError(err));
+    }
+};
+
+const updateQuestion = async (req, res) => {
+    try {
+        if (!req.session) {
+            throw new Error('No session found');
+        }
+
+        const questionId = req.body._id;
+
+        const questionDoc = await Question.findById(questionId);
+
+        for (const key in req.body) {
+            if (key === '_id') {
+                continue;
+            }
+            questionDoc[key] = question[key];
+        }
+
+        questionDoc.save();
+        res.status(200).send(questionDoc.toJSON());
     } catch (err) {
         res.status(400).send(parseError(err));
     }
@@ -102,4 +128,4 @@ const _createQuestionObject = async (req) => {
     return question;
 };
 
-export { createNewQuestion, getQuestions };
+export { createNewQuestion, getQuestions, updateQuestion };

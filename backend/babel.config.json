@@ -9,8 +9,5 @@
             }
         ]
     ],
-    "ignore": [
-        "src/frontend",
-        "src/index.js"
-    ]
+    "ignore": ["src/frontend", "src/index.js"]
 }
