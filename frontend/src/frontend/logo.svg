@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="235px" height="390px" viewBox="0 0 235 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Fill 35</title>
+    <g id="Splash-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Browser" transform="translate(-627.000000, -373.000000)">
+            <g stroke-width="1" fill-rule="evenodd">
+                <path d="M7.00006596,0 C3.13403628,0 0,3.13457535 0,6.99369875 L0,55 L1920,55 L1920,6.99369875 C1920,3.13118559 1916.86926,0 1912.99993,0 L7.00006596,0 Z" id="background" fill="#D3D3D3"></path>
+                <circle id="object" fill="#E96E4C" cx="25.5" cy="27.5" r="7.5"></circle>
+                <path d="M48.5,35 C52.6421356,35 56,31.6421356 56,27.5 C56,23.3578644 52.6421356,20 48.5,20 C44.3578644,20 41,23.3578644 41,27.5 C41,31.6421356 44.3578644,35 48.5,35 Z" id="object" fill="#E6A935"></path>
+                <circle id="object" fill="#85C33D" cx="71.5" cy="27.5" r="7.5"></circle>
+                <rect id="search" fill="#FFFFFF" opacity="0.85" x="97" y="14" width="1788" height="27"></rect>
+            </g>            
+            <text id="Browser-1920-x-1080" font-family="Helvetica" font-size="18" font-weight="normal"></text>
+        </g>
+        <path d="M117.501182,0 C93.6023161,44.4505262 39.1300192,139.654089 39.1300192,139.654089 L68.9232139,129.304181 L11.2779572,254.799465 L43.0146489,244.451919 L0,340.191514 L102.927319,340.191514 L102.927319,390 L126.246919,390 L126.246919,340.191514 L235,340.191514 L191.987715,244.451919 L223.724407,254.799465 L166.07915,129.304181 L195.874709,139.654089 C195.874709,139.654089 141.400048,44.4505262 117.501182,0" id="Fill-35" fill="#6c8663"></path>
+    </g>
+</svg>
