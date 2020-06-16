@@ -12,7 +12,7 @@ backend/node_modules
 
 # production
 /build
-/lib
+/backend/lib
 
 # misc
 .DS_Store

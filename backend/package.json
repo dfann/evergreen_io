@@ -10,14 +10,10 @@
         "singleQuote": true
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "backend-build": "babel src -d lib",
+        "start": "node ./src/index.js",
+        "build": "babel src -d lib",
         "test": "jest",
-        "eject": "react-scripts eject",
-        "backend-scripts-below": "",
-        "backend-start": "node ./src/index-server.js",
-        "watch": "nodemon ./src/index-server.js --ignore public/",
+        "watch": "nodemon ./src/index.js",
         "backend-dev": "concurrently 'npm run watch' 'npm run assets' --names '💻,📦' --prefix name",
         "assets": "webpack -w --display-max-modules 0",
         "sample": "node ./data/load-sample-data.js",
