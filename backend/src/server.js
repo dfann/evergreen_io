@@ -9,7 +9,7 @@ import {
     userRoutes,
     sessionRoutes,
     questionRoutes,
-} from './backend/routes/index.js';
+} from './routes/index.js';
 import cookiParser from 'cookie-parser';
 // import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 
