@@ -69,8 +69,8 @@ import cookiParser from 'cookie-parser';
         apiRouter.use('/session', sessionRoutes);
         apiRouter.use('/questions', questionRoutes);
 
-        app.listen(process.env.SERVER_PORT, () =>
-            console.log(`Listening on port ${process.env.SERVER_PORT}`)
+        app.listen(process.env.PORT, () =>
+            console.log(`Listening on port ${process.env.PORT}`)
         );
     } catch (err) {
         console.log(err);
