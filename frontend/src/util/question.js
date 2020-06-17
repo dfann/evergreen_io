@@ -1,3 +1,4 @@
+const DOMAIN = process.env.REACT_APP_API_DOMAIN
 export const newQuestion = async (question) => {
     const response = await fetch(DOMAIN + '/api/questions', {
         method: 'POST',

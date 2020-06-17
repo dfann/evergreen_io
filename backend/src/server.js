@@ -25,6 +25,7 @@ import cookiParser from 'cookie-parser';
         const allowedOrigins = [
             'http://localhost:3000',
             'http://localhost:5000',
+            'https://evergreen-wine.vercel.app'
         ];
 
         app.use(
